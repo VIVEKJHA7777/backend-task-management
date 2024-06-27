@@ -2,6 +2,7 @@ const dotenv = require("dotenv");
 const express = require('express');
 const connectMongoDB = require('./db/connectMongoDB');
 const authRoutes = require('./routes/auth.route');
+const taskRoutes = require('./routes/task.route');
 const cookieParser = require('cookie-parser')
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
+app.use("/tasks",taskRoutes);
 
 app.listen(PORT,()=>{
     console.log(`Server is running on port ${PORT}`);

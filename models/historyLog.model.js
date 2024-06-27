@@ -21,6 +21,6 @@ const historyLogSchema = new mongoose.Schema({
     }
 });
 
-const HistoryLog = mongoose.model('HistoryLog', historyLogSchema);
+const historyLog = mongoose.model('HistoryLog', historyLogSchema);
 
-module.exports = HistoryLog;
+module.exports = historyLog;
