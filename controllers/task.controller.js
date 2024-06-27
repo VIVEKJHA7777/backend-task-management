@@ -28,8 +28,34 @@ const CreateTask = async (req, res) => {
 };
 //..................End of create task controller.............
 
-const UpdateTask = (req, res) => {
+const UpdateTask = async (req, res) => {
+    const  userid  = req.user._id;
+    const taskid = req.params;
+    const { title, description, due_date, priority, status } = req.body;
+    
+    const task = await task.findOne({taskid});
+      if(!task){
+        return res.status(400).json({error:"task not exists"});
+      }
+    // Parse and convert custom date format "DD/MM/YYYY" to JavaScript Date object
+    const formattedDate = moment(due_date, 'DD/MM/YYYY').toDate();
 
+    try {
+        const newTask = new task({
+            user_id: userid,
+            title,
+            description,
+            due_date: formattedDate,
+            priority,
+            status
+        });
+
+        await newTask.save();
+        res.status(201).json({ message: 'Task created successfully', task: newTask });
+    } catch (error) {
+        console.error("Error in creating task controller", error.message);
+        res.status(500).json({ message: 'Internal server error', error: error.message });
+    }
 }
 
 module.exports = { CreateTask,UpdateTask };

@@ -2,10 +2,10 @@
 const express = require('express');
 const router = express.Router();
 const protectRoute = require('../middleware/protectRoute');
-const { CreateTask,UpdateTask } = require('../controllers/task.controller'); // Correct import
+const { CreateTask,UpdateTask } = require('../controllers/task.controller'); 
 
-// Define your routes and associate them with controller functions
+
 router.post('/createTask', protectRoute, CreateTask);
-router.post('/updateTask', protectRoute, UpdateTask);
+router.post('/updateTask/:taskid', protectRoute, UpdateTask);
 
 module.exports = router; 
