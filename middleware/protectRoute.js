@@ -4,21 +4,21 @@ const User = require('../models/user.model.js');
 const protectRoute = async (req, res, next) => {
     try {
         const token = req.cookies.jwt;
-        console.log("Received token:", token); // Debugging log
+        //console.log("Received token:", token); // Debugging log
 
         if (!token) {
             return res.status(401).json({ error: "Unauthorized - No Token Provided" });
         }
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        console.log("Decoded token:", decoded); // Debugging log
+        //console.log("Decoded token:", decoded); // Debugging log
 
         if (!decoded) {
             return res.status(401).json({ error: "Unauthorized - Invalid Token" });
         }
 
         const user = await User.findById(decoded.userId).select("-password");
-        console.log("Authenticated user:", user); // Debugging log
+        //console.log("Authenticated user:", user); // Debugging log
 
         if (!user) {
             return res.status(404).json({ error: "User not found" });
